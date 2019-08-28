@@ -52,7 +52,9 @@ class BooksApp extends React.Component {
             </div>
           </div>
         ) : (
-          <ListBooks/>
+          <ListBooks 
+            fullBooksList={this.state.fullBooksList}
+          />
         )}
       </div>
     )
