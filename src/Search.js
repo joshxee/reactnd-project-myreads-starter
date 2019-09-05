@@ -41,6 +41,8 @@ class Search extends Component {
       });
   }
 
+  // Debounce function from Kfir Zuberi
+  // https://medium.com/walkme-engineering/debounce-and-throttle-in-real-life-scenarios-1cc7e2e38c68
   debounce(func, interval) {
     var timeout;
     return function() {
