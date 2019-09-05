@@ -7,7 +7,7 @@
 * React
 
 ## Clone and Launch
-1. Clone the repository `git clone`
+1. Clone the repository `git clone https://github.com/joshxee/reactnd-project-myreads-starter.git`
 1. Install dependencies `Yarn install`
 1. Start local debug build `Yarn run`
 
