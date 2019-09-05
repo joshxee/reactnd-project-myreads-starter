@@ -1,3 +1,16 @@
+# Updated Run Instructions
+
+## Requirements:
+* Node JS
+* git
+* Yarn
+* React
+
+## Clone and Launch
+1. Clone the repository `git clone https://github.com/joshxee/reactnd-project-myreads-starter.git`
+1. Install dependencies `Yarn install`
+1. Start local debug build `Yarn start`
+
 # MyReads Project
 
 This is the starter template for the final assessment project for Udacity's React Fundamentals course. The goal of this template is to save you time by providing a static example of the CSS and HTML markup that may be used, but without any of the React code that is needed to complete the project. If you choose to start with this template, your job will be to add interactivity to the app by refactoring the static code in this template.
