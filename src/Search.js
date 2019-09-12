@@ -14,7 +14,13 @@ class Search extends Component {
     this.setState(() => ({
       query: query
     }));
-    this.debounce(this.getSearchBooks(query), 250);
+    if(query === ""){
+      this.setState(() => ({
+        queriedBooks: []
+      }))
+    } else {
+      this.debounce(this.getSearchBooks(query), 250);
+    }
   };
 
   clearQuery = () => {
@@ -30,6 +36,9 @@ class Search extends Component {
       .then(queriedBooks => {
         if (queriedBooks.error !== undefined) {
           console.log(queriedBooks.error);
+          this.setState(() => ({
+            queriedBooks: []
+          }))
         } else {
           this.setState(() => ({
             queriedBooks
