@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import * as BooksAPI from "./BooksAPI";
 import Book from "./Book";
-
+import DebounceInput from "react-debounce-input";
 
 class Search extends Component {
   state = {
@@ -14,12 +14,12 @@ class Search extends Component {
     this.setState(() => ({
       query: query
     }));
-    if(query === ""){
+    if (query === "") {
       this.setState(() => ({
         queriedBooks: []
-      }))
+      }));
     } else {
-      this.debounce(this.getSearchBooks(query), 250);
+      this.getSearchBooks(query);
     }
   };
 
@@ -38,7 +38,7 @@ class Search extends Component {
           console.log(queriedBooks.error);
           this.setState(() => ({
             queriedBooks: []
-          }))
+          }));
         } else {
           this.setState(() => ({
             queriedBooks
@@ -50,25 +50,13 @@ class Search extends Component {
       });
   }
 
-  // Debounce function from Kfir Zuberi
-  // https://medium.com/walkme-engineering/debounce-and-throttle-in-real-life-scenarios-1cc7e2e38c68
-  debounce(func, interval) {
-    var timeout;
-    return function() {
-      var context = this,
-        args = arguments;
-      var later = function() {
-        timeout = null;
-        func.apply(context, args);
-      };
-      clearTimeout(timeout);
-      timeout = setTimeout(later, interval || 200);
-    };
-  }
-
   render() {
     const { query, queriedBooks } = this.state;
-    const { onUpdateBook } = this.props;
+    const { onUpdateBook, addedBooks } = this.props;
+
+    const addedIds = addedBooks.map(b => b.id)
+    const showingBooks = queriedBooks
+      .filter(({id}) => !addedIds.includes(id))
 
     return (
       <div className="search-books">
@@ -77,7 +65,8 @@ class Search extends Component {
             Close
           </Link>
           <div className="search-books-input-wrapper">
-            <input
+            <DebounceInput
+              debounceTimeout={500}
               type="text"
               placeholder="Search by title or author"
               value={query}
@@ -87,12 +76,15 @@ class Search extends Component {
         </div>
         <div className="search-books-results">
           <ol className="books-grid">
-            {queriedBooks !== undefined &&
-              queriedBooks.map(book => (
+            {showingBooks !== undefined &&
+              showingBooks.map(book => (
                 <li key={book.id}>
-                  <Book book={book} onUpdateBook={(book, shelf) => {
-                    onUpdateBook(book, shelf);
-                  }} />
+                  <Book
+                    book={book}
+                    onUpdateBook={(book, shelf) => {
+                      onUpdateBook(book, shelf);
+                    }}
+                  />
                 </li>
               ))}
           </ol>

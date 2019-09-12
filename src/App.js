@@ -17,11 +17,7 @@ class BooksApp extends React.Component {
   getAllBooks = () => {
     BooksAPI.getAll()
     .then(fullBooksList => {
-      this.setState(() => {
-        return { 
-          fullBooksList: fullBooksList
-         };
-      });
+      this.setState({fullBooksList});
     })
     .catch(err => {
       console.log("Books API cannot be reached");
@@ -45,6 +41,7 @@ class BooksApp extends React.Component {
             <Search
               onUpdateBook={this.updateBook}
               getSearchBooks={this.getSearchBooks}
+              addedBooks={this.state.fullBooksList}
             />
           )}
         />
